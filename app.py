@@ -16,7 +16,7 @@ def init_app():
         'api_hgyj': 'https://reportapi.eastmoney.com/report/jg?cb=datatable624430&pageSize=50&beginTime=2021-12-13&endTime=2023-12-13&pageNo=2&fields=&qType=3&orgCode=&author=&p=2&pageNum=2&pageNumber=2&_=1702429925208',
         'api_clyb': 'https://reportapi.eastmoney.com/report/jg?cb=datatable5964799&pageSize=50&beginTime=2021-12-13&endTime=2023-12-13&pageNo=2&fields=&qType=2&orgCode=&author=&p=2&pageNum=2&pageNumber=2&_=1702429948047',
         'api_qscb': 'https://reportapi.eastmoney.com/report/jg?cb=datatable3770536&pageSize=50&beginTime=2021-12-13&endTime=2023-12-13&pageNo=2&fields=&qType=4&orgCode=&author=&p=2&pageNum=2&pageNumber=2&_=1702429970232',
-        'api_xgyj': 'https://reportapi.eastmoney.com/report/newStockList?cb=datatable3619528&pageSize=50&beginTime=2021-12-13&endTime=2023-12-13&pageNo=2&fields=&qType=4&p=2&pageNum=2&pageNumber=2&_=1702429987997'
+        # 'api_xgyj': 'https://reportapi.eastmoney.com/report/newStockList?cb=datatable3619528&pageSize=50&beginTime=2021-12-13&endTime=2023-12-13&pageNo=2&fields=&qType=4&p=2&pageNum=2&pageNumber=2&_=1702429987997'
     }
 
 init_app()
