@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>东方财富研报</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            table-layout: auto; /* 设置为auto以便列宽可调整 */
+        }
+    
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: middle;
+            overflow: auto; /* 防止调整列宽时内容溢出 */
+        }
+    </style>
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function (){
+            $('#search-btn').on('click', function (){
+                var keywords = $('#search-input').val();
+                searchByKeywords(keywords);
+
+            })
+        })
+
+
+        function searchByKeywords(keywords) {
+            $.ajax({
+                url: '/api/search/search_data_by_keywords?q=' + keywords,
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    displayData(data);
+                }
+            });
+        }
+
+        function displayData(data) {
+            var table = $('#data-table-body');
+
+            data.forEach(function (item) {
+                var row = '<tr>';
+                row += '<td>' + item.title + '</td>';
+                row += '<td>' + item.stockName + '</td>';
+                row += '<td>' + item.industryName + '</td>';
+                console.log(item.infoCode)
+                if (typeof item.infoCode === 'undefined' ){
+                    row += '<td><a href="https://data.eastmoney.com/report/zw_macresearch.jshtml?encodeUrl=' + item.encodeUrl + '" target="_blank">直接访问</a></td>';
+                } else{
+                    row += '<td><a href="https://pdf.dfcfw.com/pdf/H3_' + item.infoCode + '_1.pdf" target="_blank">直接访问</a></td>';
+
+                }
+                
+                row += '<td>' + item.attachPages + '</td>';
+                row += '<td>' + item.publishDate + '</td>';
+                row += '</tr>';
+
+                table.append(row);
+            });
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <div>
+        <input type="text" id="search-input" placeholder="输入关键词">
+        <button id="search-btn">查询</button>
+    </div>
+    
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>研报标题</th>
+                <th>个股名称</th>
+                <th>所属行业</th>
+                <th>访问链接</th>
+                <th>附件页数</th>
+                <th>发布日期</th>
+            </tr>
+        </thead>
+        <tbody id="data-table-body">
+            {% for item in data %}
+                <tr>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.stockName }}</td>
+                    <td>{{ item.industryName }}</td>
+                    {% if item.infoCode == '' %}
+                        <td><a href="https://pdf.dfcfw.com/pdf/H3_{{ item.infoCode }}_1.pdf" target="_blank">直接访问</a></td>
+                    {% else %}
+                        <td><a href="https://data.eastmoney.com/report/zw_macresearch.jshtml?encodeUrl={{ item.encodeUrl }}" target="_blank">直接访问</a></td>
+                    {% endif %}
+                    <td>{{ item.attachPages }}</td>
+                    <td>{{ item.publishDate }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
