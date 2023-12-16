@@ -52,7 +52,6 @@
                 row += '<td>' + item.title + '</td>';
                 row += '<td>' + item.stockName + '</td>';
                 row += '<td>' + item.industryName + '</td>';
-                console.log(item.infoCode)
                 if (typeof item.infoCode === 'undefined' ){
                     row += '<td><a href="https://data.eastmoney.com/report/zw_macresearch.jshtml?encodeUrl=' + item.encodeUrl + '" target="_blank">直接访问</a></td>';
                 } else{
