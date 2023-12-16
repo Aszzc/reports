@@ -13,7 +13,8 @@ app = Flask(__name__)
 
 
 #实时响应程序
-@app.route('/api/realtime')
+# @app.route('/api/realtime')
+@app.route('/')
 def realtime():
     return render_template('realtime.html')
 
