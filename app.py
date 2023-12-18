@@ -5,12 +5,14 @@ sys.path.append('.')
 import config as cfg
 import os
 import requests
+import subprocess
+from flask_caching import Cache
 
 os.environ['TODAY_DATE'] = cfg.now()
 os.environ['INIT_DATE'] = '2020-01-01'
 
 app = Flask(__name__)
-
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 #实时响应程序
 # @app.route('/api/realtime')
@@ -19,6 +21,7 @@ def realtime():
     return render_template('realtime.html')
 
 @app.route('/api/realtime/get_data_by_task')
+@cache.cached(timeout=600)  # 设置缓存过期时间为60秒
 def get_data_by_task():
     task = request.args.get('task',default='hhyj')
     page = request.args.get('page', default=1)
@@ -60,7 +63,6 @@ def search():
     return render_template('search.html')
 
 
-
 @app.route('/api/search/search_data_by_keywords')
 def search_data_by_keywords():
     q = request.args.get('q')
@@ -90,6 +92,16 @@ def search_data_by_keywords():
     return results
 
 
+#更新数据
+#http://127.0.0.1:5000/api/update
+@app.route('/api/update')
+def update():
+    today_date = cfg.now()
+    init_date = cfg.lasted()
+
+    os.chdir('./spider_main')
+    subprocess.run(['scrapy', 'crawl', f'{cfg.SPIDER_NAME}', '-a', f'today_date={today_date}', '-a',  f'init_date={init_date}'])
+    return 'Scrapy spider is running.'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, threaded = True)

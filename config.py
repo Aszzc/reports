@@ -66,10 +66,14 @@ def init_mongo():
     db = client[MONGODB_DB]
     collection = db[MONGODB_COLLECTION]
     return collection
+#get lasted db records date
 
+def lasted():
+    db = init_mongo()
 
-    # last_data = collection.find().sort({'publishDate':-1}).limit(1)[0]['publishDate']
-    # first_data = collection.find().sort({'publishDate':1}).limit(1)[0]['publishDate']
-    # last_data = datetime.strptime(last_data, '%Y-%m-%d %H:%M:%S.%f').date()
-    # first_data = datetime.strptime(first_data, '%Y-%m-%d %H:%M:%S.%f').date()
-    # return last_data,first_data
+    lasted_data = db.find().sort({'publishDate':-1}).limit(1)[0]['publishDate']
+    first_data = db.find().sort({'publishDate':1}).limit(1)[0]['publishDate']
+    lasted_data = datetime.strptime(lasted_data, '%Y-%m-%d %H:%M:%S.%f').date()
+    first_data = datetime.strptime(first_data, '%Y-%m-%d %H:%M:%S.%f').date()
+
+    return lasted_data

@@ -1,3 +1,4 @@
+from typing import Any, Optional
 import scrapy
 import sys
 sys.path.append('..')
@@ -9,12 +10,18 @@ class MySpider(scrapy.Spider):
     name = cfg.SPIDER_NAME
     RUNNING_FLAG = []
 
+    def __init__(self, today_date=None, init_date=None, **kwargs: Any):
+        super(MySpider, self).__init__( **kwargs)
+        self.today_date = today_date
+        self.init_date = init_date
+
+
     def start_requests(self):
         # today_date = cfg.now()
         # today_date = '2018-01-01'
         # init_date = '2017-01-01'
-        today_date = os.environ.get('TODAY_DATE')
-        init_date = os.environ.get('INIT_DATE')
+        today_date = self.today_date
+        init_date = self.init_date
 
         for task, url in cfg.APIs.items():
             page = 1
