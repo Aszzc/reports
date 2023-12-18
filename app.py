@@ -20,6 +20,7 @@ cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 def realtime():
     return render_template('realtime.html')
 
+
 @app.route('/api/realtime/get_data_by_task')
 @cache.cached(timeout=600)  # 设置缓存过期时间为60秒
 def get_data_by_task():
