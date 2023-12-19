@@ -46,7 +46,8 @@
 
         function displayData(data) {
             var table = $('#data-table-body');
-
+            table.empty();
+            
             data.forEach(function (item) {
                 var row = '<tr>';
                 row += '<td>' + item.title + '</td>';
