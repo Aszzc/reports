@@ -2,3 +2,4 @@ flask
 ntplib
 requests
 pymongo
+flask_caching
